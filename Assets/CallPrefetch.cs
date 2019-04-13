@@ -20,10 +20,16 @@ public class CallPrefetch : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //StartCoroutine("Send");
+
         if (Input.GetMouseButtonDown(0))
         {
-            Send();
-            StartCoroutine(ttc.ListenForData(fid));
+            List<int> fid_list = new List<int>();
+            fid_list.Add(fid);
+            //fid_list.Add(fid + 161);
+            //fid_list.Add(fid + 1);
+            //before sending the request for fids we need to check whether those fids already existed or not then pass to network thread
+            Send(fid_list);
+            StartCoroutine(ttc.ListenForData());
             count++;
         }
         /*if (fid < 200) fid++;
@@ -32,11 +38,11 @@ public class CallPrefetch : MonoBehaviour {
     }
 
     //IEnumerator Send()
-    void Send()
+    void Send(List<int> fid_list)
     {
         //else fid = 0;
-        fid++;
-        ttc.Sendfid(fid);
+        //fid++;
+        ttc.Sendfid(fid_list);
         //if (fid < 2)
         
         //yield return new WaitForSeconds(2f);
